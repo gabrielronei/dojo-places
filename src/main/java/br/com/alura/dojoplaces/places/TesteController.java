@@ -1,4 +1,4 @@
-package br.com.alura.dojoplaces;
+package br.com.alura.dojoplaces.places;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
