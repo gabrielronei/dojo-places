@@ -4,14 +4,17 @@ import br.com.alura.dojoplaces.models.Place;
 
 import javax.validation.constraints.*;
 
-public class NewPlaceDTO {
+public class EditPlaceForm {
+
+    @NotNull
+    private Long id;
 
     @NotBlank
     @Size(max = 100)
     private String name;
 
     @NotBlank
-    @Pattern(regexp = "[a-z0-9-]+$")
+    @Pattern(regexp = "[a-z0-9-]+")
     private String code;
 
     @NotBlank
@@ -22,11 +25,16 @@ public class NewPlaceDTO {
     @Size(max = 100)
     private String city;
 
-    public NewPlaceDTO(String name, String code, String neighborhood, String city) {
+    public EditPlaceForm(Long id, String name, String code, String neighborhood, String city) {
+        this.id = id;
         this.name = name;
         this.code = code;
         this.neighborhood = neighborhood;
         this.city = city;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -45,7 +53,4 @@ public class NewPlaceDTO {
         return city;
     }
 
-    public Place toModel() {
-        return new Place(name, code, neighborhood, city);
-    }
 }
