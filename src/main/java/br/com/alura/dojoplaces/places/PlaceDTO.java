@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class PlaceDTO {
 
+    private Long id;
     private String name;
     private String district;
     private String city;
@@ -12,12 +13,17 @@ public class PlaceDTO {
     private LocalDateTime updatedAt;
 
     public PlaceDTO(Places place) {
+        this.id = place.getId();
         this.name = place.getName();
         this.district = place.getDistrict();
         this.city = place.getCity();
         this.code = place.getCode();
         this.createdAt = place.getCreatedAt();
         this.updatedAt = place.getUpdatedAt();
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {

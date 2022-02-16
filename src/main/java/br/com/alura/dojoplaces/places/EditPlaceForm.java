@@ -2,7 +2,7 @@ package br.com.alura.dojoplaces.places;
 
 import javax.validation.constraints.*;
 
-public record NewPlaceForm(
+public record EditPlaceForm(
         @NotBlank(message = "{places.name.notempty}")
         @Size(max = 100, message = "{places.fields.size}")
         String name,

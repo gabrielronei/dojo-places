@@ -39,7 +39,7 @@
                 <td>${place.code}</td>
                 <td>${place.createdAt}</td>
                 <td>${place.updatedAt}</td>
-                <td><a>Editar</a></td>
+                <td><a href="/local/places/edit/${place.id}"  >Editar</a></td>
                 <td><a>Deletar</a></td>
             </tr>
         </c:forEach>
