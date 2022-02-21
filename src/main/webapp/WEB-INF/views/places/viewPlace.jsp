@@ -40,11 +40,16 @@
                 <td>${place.createdAt}</td>
                 <td>${place.updatedAt}</td>
                 <td><a href="/local/places/edit/${place.id}"  >Editar</a></td>
-                <td><a>Deletar</a></td>
+                <td>
+                    <form class="placesForm" method="post" action="/local/places/remove/${place.id}">
+                        <button type="submit" onclick="confirm('Deseja mesmo excluir o id ${place.id} ?') ? this.parentElement.submit(): ''" id="placeId">Deletar</button>
+                    </form>
+                </td>
             </tr>
         </c:forEach>
     </table>
     <h4><a href="/local/places/new">Novo local</a></h4>
+
 
 
 </body>

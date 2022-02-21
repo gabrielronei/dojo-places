@@ -1,11 +1,10 @@
 package br.com.alura.dojoplaces.places;
 
-
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -17,10 +16,25 @@ import java.util.List;
 @RequestMapping("/local")
 public class PlacesController {
 
-    private PlacesRepository placesRepository;
+    private final PlacesRepository placesRepository;
+    private final NewPlaceFormValidator newPlaceFormValidator;
+    private final EditPlaceFormValidator editPlaceFormValidator;
 
-    public PlacesController(PlacesRepository placesRepository) {
+
+    public PlacesController(PlacesRepository placesRepository, NewPlaceFormValidator newPlaceFormValidator, EditPlaceFormValidator editPlaceFormValidator) {
         this.placesRepository = placesRepository;
+        this.newPlaceFormValidator = newPlaceFormValidator;
+        this.editPlaceFormValidator = editPlaceFormValidator;
+    }
+
+    @InitBinder("newPlaceForm")
+    void initBinderNewPlaceForm(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(newPlaceFormValidator);
+    }
+
+    @InitBinder("editPlaceForm")
+    void initBinderEditPlaceForm(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(editPlaceFormValidator);
     }
 
     @GetMapping("/places")
@@ -64,6 +78,15 @@ public class PlacesController {
         Places place = placesRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, id.toString()));
         place.toMerge(editPlaceForm);
+        return "redirect:/local/places";
+    }
+
+    @PostMapping("/places/remove/{id}")
+    public String delete(@PathVariable Long id, Model model){
+        Places place = placesRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, id.toString()));
+        placesRepository.delete(place);
+
         return "redirect:/local/places";
     }
 
