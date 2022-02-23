@@ -11,7 +11,7 @@ public class NewPlaceForm {
     private String name;
 
     @NotBlank
-    @Pattern(regexp = "[a-z0-9-]+$")
+    @Pattern(regexp = "[a-z0-9-]+")
     private String code;
 
     @NotBlank

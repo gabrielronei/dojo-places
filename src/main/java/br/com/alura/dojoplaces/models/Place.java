@@ -26,6 +26,7 @@ public class Place {
     private String name;
 
     @NotBlank
+    @Column(unique = true)
     @Pattern(regexp = "[a-z0-9-]+$")
     private String code;
 

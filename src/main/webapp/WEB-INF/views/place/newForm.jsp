@@ -6,7 +6,7 @@
 <form:form modelAttribute="newPlaceForm" method="post" action="/local/novo">
 
     <label for="name">Nome:</label><br/>
-    <form:input path="name" maxlength="100" />
+    <form:input path="name" required="true" maxlength="100" />
     <form:errors path="name" cssStyle="color: red"/>
 
     <br/>

@@ -9,25 +9,31 @@
 <br>
 <br>
 
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Código</th>
-        <th>Data criação</th>
-        <th>Dias desde a última atualização</th>
-        <th colspan="2">Ações</th>
-    </tr>
-    <c:forEach items="${places}" var="place">
-        <tr>
-            <td>${place.id}</td>
-            <td>${place.name}</td>
-            <td>${place.code}</td>
-            <td>${place.createdAt}</td>
-            <%-- TODO: implementar Dias desde a última atualização --%>
-            <td>10 dias atrás</td>
-            <td><a href="/local/editar/${place.id}">Editar</a></td>
-            <td><a href="/local/remover/${place.id}">Remover</a></td>
-        </tr>
-    </c:forEach>
-</table>
+<c:choose>
+    <c:when test="${empty places}">
+        <p>Sem locais cadastrados</p>
+    </c:when>
+    <c:otherwise>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Código</th>
+                <th>Data criação</th>
+                <th>Dias desde a última atualização</th>
+                <th colspan="2">Ações</th>
+            </tr>
+            <c:forEach items="${places}" var="place">
+                <tr>
+                    <td>${place.id}</td>
+                    <td>${place.name}</td>
+                    <td>${place.code}</td>
+                    <td>${place.createdAtFormatted}</td>
+                    <td>${place.daysSinceLastUpdate}</td>
+                    <td><a href="/local/editar/${place.id}">Editar</a></td>
+                    <td><a href="/local/remover/${place.id}">Remover</a></td>
+                </tr>
+            </c:forEach>
+        </table>
+    </c:otherwise>
+</c:choose>

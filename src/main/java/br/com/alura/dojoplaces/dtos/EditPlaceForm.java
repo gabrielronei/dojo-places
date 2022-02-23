@@ -25,32 +25,55 @@ public class EditPlaceForm {
     @Size(max = 100)
     private String city;
 
-    public EditPlaceForm(Long id, String name, String code, String neighborhood, String city) {
-        this.id = id;
-        this.name = name;
-        this.code = code;
-        this.neighborhood = neighborhood;
-        this.city = city;
+    public EditPlaceForm() {
+
+    }
+
+    public EditPlaceForm(Place place) {
+        this.id = place.getId();
+        this.name = place.getName();
+        this.code = place.getCode();
+        this.neighborhood = place.getNeighborhood();
+        this.city = place.getCity();
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCode() {
         return code;
     }
 
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getNeighborhood() {
         return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
     }
 
     public String getCity() {
         return city;
     }
 
+    public void setCity(String city) {
+        this.city = city;
+    }
 }

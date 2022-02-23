@@ -4,9 +4,12 @@ import br.com.alura.dojoplaces.dtos.*;
 import br.com.alura.dojoplaces.exceptions.NotFoundException;
 import br.com.alura.dojoplaces.models.Place;
 import br.com.alura.dojoplaces.repositories.PlaceRepository;
+import br.com.alura.dojoplaces.validations.EditPlaceFormValidator;
+import br.com.alura.dojoplaces.validations.NewPlaceFormValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,6 +22,16 @@ public class PlaceController {
 
     public PlaceController(PlaceRepository placeRepository) {
         this.placeRepository = placeRepository;
+    }
+
+    @InitBinder("newPlaceForm")
+    public void initBinderNewPlaceForm(WebDataBinder binder) {
+        binder.addValidators(new NewPlaceFormValidator(placeRepository));
+    }
+
+    @InitBinder("editPlaceForm")
+    public void initBinderEditPlaceForm(WebDataBinder binder) {
+        binder.addValidators(new EditPlaceFormValidator(placeRepository));
     }
 
     @GetMapping("/local/novo")
@@ -38,8 +51,7 @@ public class PlaceController {
 
     @GetMapping("/local/lista")
     public String list(Model model) {
-        // TODO: Criar um DTO somente com os dados que precisar exibir na view
-        List<Place> places = placeRepository.findAll();
+        List<PlaceView> places = placeRepository.findAll().stream().map(PlaceView::new).toList();
         model.addAttribute("places", places);
         return "/place/list";
     }
@@ -47,7 +59,7 @@ public class PlaceController {
     @GetMapping("/local/editar/{id}")
     public String formEdit(@PathVariable("id") Long id, Model model) {
         Place place = placeRepository.findById(id).orElseThrow(NotFoundException::new);
-        model.addAttribute("editPlaceForm", new PlaceForm(place));
+        model.addAttribute("editPlaceForm", new EditPlaceForm(place));
         return "/place/editForm";
     }
 
